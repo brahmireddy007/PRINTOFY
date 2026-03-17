@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Password Reset | PRINTOFY</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink: #2A2A2A;
+      --cream: #F9F5ED;
+
+      --red: #902124;
+      --blue: #8EB9FF;
+      --wine: #4D0011;
+      --blush: #C2858C;
+
+      --lavender: var(--blue);
+      --gold: var(--blush);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 90px 18px 40px;
+      overflow-x: hidden;
+
+      background:
+        radial-gradient(950px 650px at 14% 18%, rgba(142,185,255,0.90), transparent 60%),
+        radial-gradient(980px 700px at 88% 22%, rgba(194,133,140,0.82), transparent 62%),
+        radial-gradient(1050px 750px at 55% 95%, rgba(144,33,36,0.65), transparent 60%),
+        linear-gradient(135deg, rgba(77,0,17,0.60) 0%, rgba(249,245,237,1) 48%, rgba(142,185,255,0.55) 100%);
+    }
+
+    /* noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* blobs */
+    .blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .blob-1 {
+      width: 520px;
+      height: 520px;
+      background: rgba(142,185,255,0.95);
+      top: -220px;
+      right: -170px;
+      opacity: 0.22;
+    }
+
+    .blob-2 {
+      width: 380px;
+      height: 380px;
+      background: rgba(194,133,140,0.85);
+      bottom: -140px;
+      left: -120px;
+      opacity: 0.16;
+    }
+
+    .blob-3 {
+      width: 280px;
+      height: 280px;
+      background: rgba(144,33,36,0.65);
+      top: 45%;
+      left: 40%;
+      opacity: 0.12;
+      filter: blur(110px);
+    }
+
+    /* navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(249,245,237,0.78);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(26,16,37,0.07);
+      padding: 14px 0;
+    }
+
+    .logo-mark {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: 20px;
+      color: var(--ink);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--red));
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(26,16,37,0.55);
+      text-decoration: none;
+      padding: 7px 16px;
+      border: 1.5px solid rgba(26,16,37,0.12);
+      border-radius: 100px;
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
+    /* card */
+    .wrap {
+      position: relative;
+      z-index: 1;
+      width: min(520px, 100%);
+    }
+
+    .cardx {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(26, 16, 37, 0.08);
+      border-radius: 28px;
+      padding: 34px 30px 28px;
+      box-shadow: 0 18px 55px rgba(26, 16, 37, 0.1);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .brand-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(249, 245, 237, 0.85);
+      border: 1px solid rgba(26, 16, 37, 0.1);
+      margin-bottom: 18px;
+    }
+
+    .brand-name {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-spark {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--red));
+    }
+
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      letter-spacing: -0.8px;
+      font-size: 30px;
+      margin: 4px 0 6px;
+    }
+
+    p.sub {
+      color: rgba(26, 16, 37, 0.55);
+      font-size: 14px;
+      margin: 0 0 18px;
+    }
+
+    .label {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(26, 16, 37, 0.6);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .form-control {
+      border-radius: 16px;
+      padding: 12px 14px;
+      border: 1.5px solid rgba(26, 16, 37, 0.12);
+      background: rgba(249, 245, 237, 0.7);
+      font-weight: 500;
+    }
+
+    .form-control:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(142, 185, 255, 0.25);
+      background: rgba(249, 245, 237, 0.92);
+    }
+
+    .btn-main {
+      width: 100%;
+      border: none;
+      border-radius: 16px;
+      padding: 12px 14px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--wine), var(--red));
+      color: #fff;
+      transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+    }
+
+    .btn-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(26, 16, 37, 0.18);
+      background: linear-gradient(135deg, var(--red), var(--wine));
+    }
+
+    .divider {
+      height: 1px;
+      background: rgba(26, 16, 37, 0.08);
+      margin: 18px 0 16px;
+    }
+
+    .small {
+      font-size: 13px;
+      color: rgba(26, 16, 37, 0.55);
+      margin: 0;
+    }
+
+    a {
+      color: var(--red);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .msg-ok {
+      font-size: 12px;
+      color: #1b7f6a;
+      margin-top: 10px;
+      font-weight: 600;
+      display: none;
+    }
+
+    .msg-err {
+      font-size: 12px;
+      color: #d1002a;
+      margin-top: 10px;
+      min-height: 16px;
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    @media (min-width: 520px) {
+      .grid2 {
+        grid-template-columns: 1fr auto;
+        align-items: center;
+      }
+
+      .grid2 .btn-main {
+        width: auto;
+        padding-left: 18px;
+        padding-right: 18px;
+        white-space: nowrap;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <nav class="navbar">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a href="index.php" class="logo-mark">
+        <span class="logo-dot"></span>
+        PRINTOFY
+      </a>
+      <a href="login.html" class="back-btn">← back to login</a>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <div class="cardx">
+      <div class="brand-pill">
+        <span class="brand-spark"></span>
+        <span class="brand-name">printofy</span>
+        <span class="small" style="margin-left: 4px;">password reset ✦</span>
+      </div>
+
+      <h1>reset your password</h1>
+      <p class="sub">step 1: send code. step 2: set new password. all in one page.</p>
+
+      <!-- STEP 1 -->
+      <form action="password_reset_send.php" method="POST" id="sendForm" novalidate>
+        <label class="label">1) send code to email</label>
+        <div class="grid2">
+          <input type="email" name="email" id="email" class="form-control" placeholder="email address" required />
+          <button type="submit" class="btn-main">send code →</button>
+        </div>
+        <div class="msg-ok" id="sentMsg">code sent (if email exists). check inbox/spam.</div>
+      </form>
+
+      <div class="divider"></div>
+
+      <!-- STEP 2 -->
+      <form action="password_reset_verify.php" method="POST" id="resetForm" novalidate>
+        <label class="label">2) enter code + new password</label>
+
+        <input type="hidden" name="email" id="emailHidden" />
+
+        <input type="text" name="code" id="code" class="form-control" placeholder="6-digit code" maxlength="6" required />
+        <input type="password" name="new_password" id="new_password" class="form-control mt-2" placeholder="new password (min 6)" required />
+        <input type="password" name="confirm_password" id="confirm_password" class="form-control mt-2" placeholder="confirm password" required />
+
+        <div class="msg-err" id="err"></div>
+
+        <button type="submit" class="btn-main mt-3">update password →</button>
+
+        <p class="small mt-3">
+          back to <a href="login.html">login</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+
+    const emailParam = params.get("email");
+    const sent = params.get("sent");
+    const ok = params.get("ok");
+    const msg = params.get("msg");
+
+    const emailBox = document.getElementById("email");
+    const emailHidden = document.getElementById("emailHidden");
+    const sentMsg = document.getElementById("sentMsg");
+    const err = document.getElementById("err");
+
+    if (emailParam) {
+      emailBox.value = emailParam;
+      emailHidden.value = emailParam;
+    }
+
+    if (sent === "1") {
+      sentMsg.style.display = "block";
+    }
+
+    if (ok === "1") {
+      err.style.color = "#1b7f6a";
+      err.textContent = "password updated. go login 🫶";
+    }
+
+    if (msg) {
+      err.style.color = "#d1002a";
+      err.textContent = msg;
+    }
+
+    emailBox.addEventListener("input", () => {
+      emailHidden.value = emailBox.value.trim();
+    });
+
+    document.getElementById("resetForm").addEventListener("submit", (e) => {
+      err.style.color = "#d1002a";
+      err.textContent = "";
+
+      const email = emailHidden.value.trim();
+      const code = document.getElementById("code").value.trim();
+      const p1 = document.getElementById("new_password").value;
+      const p2 = document.getElementById("confirm_password").value;
+
+      if (!email) {
+        e.preventDefault();
+        err.textContent = "enter email above first";
+        return;
+      }
+
+      if (!/^\d{6}$/.test(code)) {
+        e.preventDefault();
+        err.textContent = "code must be 6 digits";
+        return;
+      }
+
+      if (p1.length < 6) {
+        e.preventDefault();
+        err.textContent = "password min 6 chars";
+        return;
+      }
+
+      if (p1 !== p2) {
+        e.preventDefault();
+        err.textContent = "passwords do not match";
+        return;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy | PRINTOFY</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:#2A2A2A;
+  --cream:#F9F5ED;
+  --red:#902124;
+  --blue:#8EB9FF;
+  --wine:#4D0011;
+  --blush:#C2858C;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:'DM Sans',sans-serif;
+  color:var(--ink);
+  min-height:100vh;
+  background:
+    radial-gradient(950px 650px at 14% 18%, rgba(142,185,255,0.90), transparent 60%),
+    radial-gradient(980px 700px at 88% 22%, rgba(194,133,140,0.82), transparent 62%),
+    radial-gradient(1050px 750px at 55% 95%, rgba(144,33,36,0.65), transparent 60%),
+    linear-gradient(135deg, rgba(77,0,17,0.60) 0%, rgba(249,245,237,1) 48%, rgba(142,185,255,0.55) 100%);
+  background-attachment:fixed;
+}
+
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:9999;
+}
+
+.navbar{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(249,245,237,0.78);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(26,16,37,0.07);
+  padding:14px 0;
+}
+
+.logo-mark{
+  font-family:'Fraunces',serif;
+  font-weight:900;
+  font-size:20px;
+  color:var(--ink);
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.logo-dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--red));
+}
+
+.back-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:13px;
+  font-weight:600;
+  color:rgba(26,16,37,0.55);
+  text-decoration:none;
+  padding:7px 16px;
+  border:1.5px solid rgba(26,16,37,0.12);
+  border-radius:100px;
+  transition:all .2s;
+}
+.back-btn:hover{
+  color:var(--ink);
+  border-color:var(--ink);
+}
+    /* footer */
+    .footer-wrap{
+      margin-top:80px;
+    }
+
+    footer{
+      max-width:1280px;
+      margin:0 auto;
+      padding:40px 32px;
+      border-top:1px solid rgba(26,16,37,0.08);
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap:14px;
+    }
+
+    .footer-logo{
+      font-family:'Fraunces',serif;
+      font-size:20px;
+      font-weight:900;
+      color:var(--ink);
+      letter-spacing:-0.3px;
+    }
+
+    .footer-copy{
+      font-size:13px;
+      color:rgba(26,16,37,0.45);
+    }
+
+    .footer-right{
+      display:flex;
+      gap:16px;
+      align-items:center;
+    }
+.page-wrap{
+  max-width:980px;
+  margin:50px auto;
+  padding:0 18px 40px;
+  position:relative;
+  z-index:1;
+}
+
+.page-card{
+  background:rgba(255,255,255,0.78);
+  border:1px solid rgba(26,16,37,0.08);
+  border-radius:28px;
+  padding:34px 30px;
+  box-shadow:0 18px 55px rgba(26,16,37,0.10);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+}
+
+.page-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 14px;
+  border-radius:999px;
+  background:rgba(249,245,237,0.85);
+  border:1px solid rgba(26,16,37,0.10);
+  margin-bottom:18px;
+  font-size:13px;
+  font-weight:700;
+}
+
+.page-title{
+  font-family:'Fraunces',serif;
+  font-weight:900;
+  letter-spacing:-0.8px;
+  font-size:38px;
+  margin:0 0 8px;
+}
+
+.page-sub{
+  color:rgba(26,16,37,0.58);
+  font-size:14px;
+  margin-bottom:28px;
+  line-height:1.7;
+}
+
+.section{
+  margin-bottom:24px;
+}
+
+.section h2{
+  font-family:'Fraunces',serif;
+  font-size:24px;
+  margin-bottom:10px;
+  color:var(--wine);
+}
+
+.section p, .section li{
+  font-size:14px;
+  line-height:1.8;
+  color:rgba(26,16,37,0.78);
+}
+
+.section ul{
+  padding-left:18px;
+  margin:10px 0 0;
+}
+
+.footer-note{
+  margin-top:28px;
+  padding-top:18px;
+  border-top:1px solid rgba(26,16,37,0.08);
+  font-size:13px;
+  color:rgba(26,16,37,0.55);
+}
+
+@media(max-width:420px){
+  .page-card{padding:28px 22px;}
+  .page-title{font-size:30px;}
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container d-flex align-items-center justify-content-between">
+    <a href="index.php" class="logo-mark">
+      <span class="logo-dot"></span>
+      PRINTOFY
+    </a>
+    <a href="login.html" class="back-btn">← back</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-card">
+    <div class="page-pill">✦ privacy policy</div>
+    <h1 class="page-title">privacy policy</h1>
+    <p class="page-sub">
+      this page explains what information printofy collects, why it is collected, and how it is used. no weird spy behavior. just normal website stuff.
+    </p>
+
+    <div class="section">
+      <h2>1. information we collect</h2>
+      <p>
+        printofy may collect personal information such as your name, email address, login credentials, order details, uploaded designs, and review content when you use the website.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>2. how we use your information</h2>
+      <ul>
+        <li>to create and manage your account</li>
+        <li>to process and deliver your orders</li>
+        <li>to provide customer support</li>
+        <li>to improve the website and user experience</li>
+        <li>to display reviews submitted by users</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>3. password security</h2>
+      <p>
+        user passwords are stored securely in encrypted form using password hashing. printofy does not store plain text passwords.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>4. uploaded content</h2>
+      <p>
+        designs, images, or text uploaded for customization may be stored for order processing purposes. users are responsible for ensuring they have rights to upload and use such content.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>5. sharing of information</h2>
+      <p>
+        printofy does not sell personal information to third parties. information may only be shared when necessary for payment processing, delivery services, legal compliance, or website operation.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>6. cookies and basic tracking</h2>
+      <p>
+        the website may use sessions or basic cookies to keep users logged in, maintain cart data, and improve functionality.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>7. user rights</h2>
+      <p>
+        users may request correction or deletion of their account-related information, subject to legal or operational requirements.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>8. data protection</h2>
+      <p>
+        printofy takes reasonable steps to protect user information from unauthorized access, misuse, or disclosure. however, no online system can guarantee complete security.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>9. policy updates</h2>
+      <p>
+        this privacy policy may be updated from time to time. continued use of the website after changes means you accept the updated policy.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>10. contact</h2>
+      <p>
+        if you have questions about this privacy policy, you may contact printofy through the support details available on the website.
+      </p>
+    </div>
+
+    <div class="footer-note">
+      last updated: 2026
+    </div>
+  </div>
+</div>
+<div class="footer-wrap">
+<footer>
+
+<span class="footer-logo">PRINTOFY</span>
+
+<span class="footer-copy">© 2026 PRINTOFY · print your vibe ✦</span>
+
+<div class="footer-right">
+<span class="footer-copy">Made with ❤️ in India</span>
+</div>
+
+</footer>
+</div>
+</body>
+</html>

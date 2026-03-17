@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Holi Sale — PRINTOFY</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700;1,9..144,900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:        #1c1018;
+  --parchment:  #f5ede0;
+  --dusty-rose: #d4826a;
+  --turmeric:   #c8922a;
+  --sage:       #7a9e7e;
+  --indigo:     #5c6bc0;
+  --mauve:      #9b7fa6;
+  --blush:      #e8b4a0;
+  --cream:      #faf4ec;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  font-family:'DM Sans',sans-serif;
+  color:var(--ink);
+  overflow-x:hidden; min-height:100vh;
+  background:var(--parchment);
+}
+
+/* ── WARM PARCHMENT MESH BG ── */
+.bg-layer {
+  position:fixed; inset:0; z-index:0;
+  background: #f0e6d4;
+}
+.bg-layer::before {
+  content:''; position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 70% 60% at 80% 10%, rgba(212,130,106,0.3)  0%, transparent 55%),
+    radial-gradient(ellipse 60% 65% at 15% 70%, rgba(155,127,166,0.28) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 50% at 88% 80%, rgba(200,146,42,0.22)  0%, transparent 50%),
+    radial-gradient(ellipse 70% 50% at 45% 45%, rgba(245,237,224,0.5)  0%, transparent 58%),
+    radial-gradient(ellipse 40% 55% at 5%  15%, rgba(122,158,126,0.2)  0%, transparent 50%),
+    radial-gradient(ellipse 45% 40% at 60% 90%, rgba(92,107,192,0.18)  0%, transparent 52%);
+}
+.bg-blob {
+  position:absolute; border-radius:50%;
+  filter:blur(120px); pointer-events:none;
+  animation:blobDrift ease-in-out infinite alternate;
+}
+.bb1 { width:650px; height:600px; background:rgba(212,130,106,0.22); top:-200px; right:-100px; animation-duration:18s; }
+.bb2 { width:550px; height:500px; background:rgba(155,127,166,0.2);  bottom:-100px; left:-120px; animation-duration:14s; animation-direction:alternate-reverse; }
+.bb3 { width:450px; height:450px; background:rgba(200,146,42,0.16);  top:30%; left:32%; animation-duration:22s; }
+.bb4 { width:350px; height:350px; background:rgba(122,158,126,0.18); bottom:15%; right:8%; animation-duration:16s; animation-direction:alternate-reverse; }
+.bb5 { width:300px; height:300px; background:rgba(92,107,192,0.15);  top:50%; left:8%; animation-duration:20s; }
+@keyframes blobDrift {
+  from { transform:translate(0,0) scale(1); }
+  to   { transform:translate(30px,22px) scale(1.08); }
+}
+/* parchment grain texture */
+.bg-layer::after {
+  content:''; position:absolute; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
+  pointer-events:none;
+}
+
+.above { position:relative; z-index:1; }
+
+/* ── NAVBAR ── */
+.navbar {
+  position:sticky; top:0; z-index:200;
+  background:rgba(240,230,210,0.55);
+  backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px);
+  border-bottom:1px solid rgba(28,16,24,0.07); padding:13px 0;
+}
+.nav-inner {
+  max-width:1200px; margin:0 auto; padding:0 28px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.logo-mark {
+  font-family:'Fraunces',serif; font-weight:900; font-size:20px;
+  color:var(--ink); text-decoration:none; display:flex; align-items:center; gap:8px;
+}
+.logo-dot {
+  width:9px; height:9px; border-radius:50%;
+  background:linear-gradient(135deg,var(--dusty-rose),var(--turmeric));
+}
+.nav-links { display:flex; align-items:center; gap:24px; list-style:none; }
+.nav-links a { font-size:13px; font-weight:500; color:rgba(28,16,24,0.5); text-decoration:none; transition:color 0.2s; }
+.nav-links a:hover,.nav-links a.active { color:var(--ink); }
+.cart-pill {
+  display:flex; align-items:center; gap:6px;
+  background:var(--ink); color:white; padding:8px 16px; border-radius:100px;
+  font-size:13px; font-weight:600; text-decoration:none; transition:transform 0.18s;
+}
+.cart-pill:hover { transform:translateY(-1px); color:white; }
+.cart-badge {
+  background:var(--dusty-rose); color:white; font-size:10px; font-weight:700;
+  width:17px; height:17px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+}
+
+/* ── TICKER ── */
+.ticker {
+  background:var(--ink); padding:11px 0; overflow:hidden;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.ticker-inner {
+  display:flex; gap:56px; animation:marquee 22s linear infinite; width:max-content;
+}
+.ticker-inner span {
+  font-size:12px; font-weight:600; color:rgba(255,255,255,0.6);
+  white-space:nowrap; letter-spacing:0.05em;
+}
+.ticker-inner span b { color:var(--blush); font-weight:700; }
+.ticker-sep { color:rgba(212,130,106,0.5) !important; }
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ── HERO ── */
+.hero {
+  min-height:90vh; display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center; gap:0;
+  max-width:1200px; margin:0 auto; padding:60px 28px;
+  position:relative;
+}
+
+.hero-left { position:relative; z-index:2; }
+
+.hero-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(255,255,255,0.55); backdrop-filter:blur(10px);
+  border:1px solid rgba(28,16,24,0.1); border-radius:100px;
+  padding:7px 18px; font-size:11px; font-weight:700; color:rgba(28,16,24,0.6);
+  text-transform:uppercase; letter-spacing:0.1em; margin-bottom:28px;
+  opacity:0; animation:fadeUp 0.6s 0.1s forwards;
+}
+.badge-dot {
+  width:6px; height:6px; border-radius:50%;
+  background:var(--turmeric); animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
+
+.hero h1 {
+  font-family:'Fraunces',serif; font-weight:900;
+  font-size:clamp(54px,7.5vw,90px);
+  line-height:0.9; letter-spacing:-2.5px; color:var(--ink);
+  opacity:0; animation:fadeUp 0.8s 0.2s forwards;
+}
+.hero h1 .l1 { display:block; }
+.hero h1 .l2 { display:block; color:var(--dusty-rose); font-style:italic; }
+.hero h1 .l3 { display:block; }
+.hero h1 .l3 em { font-style:italic; color:var(--turmeric); }
+
+.hero-sub {
+  font-size:16px; color:rgba(28,16,24,0.55); margin-top:22px;
+  max-width:420px; line-height:1.7;
+  opacity:0; animation:fadeUp 0.7s 0.38s forwards;
+}
+
+.hero-ctas {
+  display:flex; gap:12px; margin-top:34px; flex-wrap:wrap;
+  opacity:0; animation:fadeUp 0.7s 0.52s forwards;
+}
+.btn-primary {
+  background:var(--ink); color:white; border:none;
+  padding:14px 32px; border-radius:100px;
+  font-family:'DM Sans',sans-serif; font-size:14px; font-weight:700; cursor:pointer;
+  transition:transform 0.18s, box-shadow 0.18s; text-decoration:none; display:inline-block;
+}
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 28px rgba(28,16,24,0.22); color:white; }
+.btn-outline {
+  background:rgba(255,255,255,0.5); backdrop-filter:blur(10px);
+  color:var(--ink); border:1.5px solid rgba(28,16,24,0.15);
+  padding:14px 32px; border-radius:100px;
+  font-size:14px; font-weight:600; cursor:pointer; transition:background 0.18s;
+  text-decoration:none; display:inline-block;
+}
+.btn-outline:hover { background:rgba(255,255,255,0.75); }
+
+/* code pill */
+.code-row {
+  display:inline-flex; align-items:center; gap:0; margin-top:32px;
+  background:rgba(255,255,255,0.65); backdrop-filter:blur(12px);
+  border:1.5px solid rgba(28,16,24,0.12); border-radius:14px; overflow:hidden;
+  box-shadow:0 4px 20px rgba(28,16,24,0.07);
+  opacity:0; animation:fadeUp 0.7s 0.65s forwards;
+}
+.cr-label  { padding:13px 16px; font-size:11px; font-weight:700; color:rgba(28,16,24,0.38); text-transform:uppercase; letter-spacing:0.08em; white-space:nowrap; }
+.cr-code   { padding:13px 18px; font-family:'Fraunces',serif; font-size:20px; font-weight:900; color:var(--dusty-rose); letter-spacing:0.06em; }
+.cr-copy   {
+  padding:12px 18px; background:var(--ink); color:white;
+  border:none; font-size:12px; font-weight:800; cursor:pointer;
+  font-family:'DM Sans',sans-serif; transition:background 0.18s; white-space:nowrap;
+}
+.cr-copy:hover { background:#2e1f42; }
+
+/* ── HERO RIGHT — colour dust visual ── */
+.hero-right {
+  position:relative; display:flex;
+  align-items:center; justify-content:center;
+  height:500px; z-index:2;
+  opacity:0; animation:fadeUp 0.9s 0.3s forwards;
+}
+
+/* big decorative circle */
+.dust-ring {
+  position:absolute;
+  border-radius:50%; border:1.5px solid rgba(28,16,24,0.08);
+}
+.dr1 { width:420px; height:420px; }
+.dr2 { width:310px; height:310px; border-color:rgba(28,16,24,0.05); }
+.dr3 { width:200px; height:200px; border-color:rgba(28,16,24,0.04); }
+
+/* dust orbs — muted colour splashes */
+.orb {
+  position:absolute; border-radius:50%;
+  filter:blur(28px); animation:orbDrift ease-in-out infinite alternate;
+}
+.o1 { width:180px;height:180px; background:rgba(212,130,106,0.55); top:10%;  left:10%;  animation-duration:7s; }
+.o2 { width:150px;height:150px; background:rgba(200,146,42,0.5);   top:5%;   right:12%; animation-duration:9s; animation-direction:alternate-reverse; }
+.o3 { width:160px;height:160px; background:rgba(122,158,126,0.5);  bottom:12%; left:8%; animation-duration:11s; }
+.o4 { width:140px;height:140px; background:rgba(92,107,192,0.45);  bottom:8%; right:10%; animation-duration:8s; animation-direction:alternate-reverse; }
+.o5 { width:120px;height:120px; background:rgba(155,127,166,0.5);  top:42%;  left:2%;   animation-duration:13s; }
+.o6 { width:110px;height:110px; background:rgba(212,130,106,0.4);  top:38%;  right:4%;  animation-duration:10s; }
+@keyframes orbDrift {
+  from { transform:translate(0,0) scale(1); }
+  to   { transform:translate(14px,10px) scale(1.12); }
+}
+
+/* center content in ring */
+.dust-center {
+  position:relative; z-index:2; text-align:center;
+  background:rgba(255,255,255,0.45); backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.6); border-radius:50%;
+  width:200px; height:200px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+  box-shadow:0 8px 40px rgba(28,16,24,0.08);
+}
+.dust-center .dc-pct {
+  font-family:'Fraunces',serif; font-size:52px; font-weight:900; line-height:1;
+  background:linear-gradient(135deg,var(--dusty-rose),var(--turmeric));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.dust-center .dc-off { font-size:13px; font-weight:700; color:rgba(28,16,24,0.5); letter-spacing:0.06em; text-transform:uppercase; }
+.dust-center .dc-code { font-family:'Fraunces',serif; font-size:14px; font-weight:800; color:var(--dusty-rose); margin-top:4px; }
+
+/* colour name tags around the ring */
+.colour-tag {
+  position:absolute; background:rgba(255,255,255,0.7); backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,0.6); border-radius:100px;
+  padding:6px 14px; font-size:11px; font-weight:700; color:rgba(28,16,24,0.6);
+  white-space:nowrap; display:flex; align-items:center; gap:6px;
+  box-shadow:0 3px 12px rgba(28,16,24,0.07);
+  animation:tagFloat ease-in-out infinite alternate;
+}
+.ct-dot { width:8px; height:8px; border-radius:50%; }
+.ct1 { top:4%;  left:50%; transform:translateX(-50%); animation-duration:5s; }
+.ct2 { top:22%; right:-8%; animation-duration:7s; animation-direction:alternate-reverse; }
+.ct3 { bottom:20%; right:-5%; animation-duration:6s; }
+.ct4 { bottom:4%;  left:50%; transform:translateX(-50%); animation-duration:8s; animation-direction:alternate-reverse; }
+.ct5 { top:22%;  left:-12%; animation-duration:6.5s; }
+.ct6 { bottom:20%; left:-8%; animation-duration:5.5s; animation-direction:alternate-reverse; }
+@keyframes tagFloat {
+  from { transform:translateY(0); }
+  to   { transform:translateY(-7px); }
+}
+.ct1,.ct4 { transform:translateX(-50%); }
+.ct1:hover,.ct2:hover,.ct3:hover,.ct4:hover,.ct5:hover,.ct6:hover { transform:scale(1.06); }
+
+/* ── COUNTDOWN ── */
+.countdown-wrap {
+  max-width:1200px; margin:0 auto; padding:0 28px 60px;
+  opacity:0; animation:fadeUp 0.7s 0.9s forwards;
+}
+.cd-inner {
+  background:rgba(255,255,255,0.5); backdrop-filter:blur(16px);
+  border:1px solid rgba(28,16,24,0.08); border-radius:20px;
+  padding:22px 28px; display:flex; align-items:center; gap:20px; flex-wrap:wrap;
+}
+.cd-text { font-size:13px; font-weight:600; color:rgba(28,16,24,0.45); white-space:nowrap; }
+.cd-units { display:flex; gap:10px; }
+.cd-unit {
+  background:rgba(28,16,24,0.04); border:1px solid rgba(28,16,24,0.07);
+  border-radius:12px; padding:10px 16px; text-align:center; min-width:66px;
+}
+.cd-val { font-family:'Fraunces',serif; font-size:26px; font-weight:900; color:var(--ink); display:block; line-height:1; }
+.cd-lbl { font-size:9px; font-weight:700; color:rgba(28,16,24,0.3); text-transform:uppercase; letter-spacing:0.12em; margin-top:3px; display:block; }
+.cd-sep { font-family:'Fraunces',serif; font-size:24px; font-weight:900; color:rgba(28,16,24,0.15); align-self:center; margin-top:-4px; }
+
+/* ── DEALS ── */
+.deals-section { max-width:1200px; margin:0 auto; padding:0 28px 80px; }
+.s-eyebrow { font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--dusty-rose); margin-bottom:12px; display:block; }
+.s-title { font-family:'Fraunces',serif; font-size:clamp(28px,3.5vw,44px); font-weight:900; letter-spacing:-1px; color:var(--ink); line-height:1.05; }
+.s-title em { font-style:italic; color:var(--turmeric); }
+
+.deals-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-top:36px; }
+
+.deal-card {
+  background:rgba(255,255,255,0.6); backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,0.7); border-radius:22px; padding:24px;
+  opacity:0; transform:translateY(28px);
+  transition:opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1), box-shadow 0.28s;
+}
+.deal-card.visible { opacity:1; transform:translateY(0); }
+.deal-card:hover { box-shadow:0 16px 46px rgba(28,16,24,0.1); transform:translateY(-4px); }
+
+.deal-icon-wrap {
+  width:50px; height:50px; border-radius:15px;
+  display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:16px;
+}
+.deal-name { font-family:'Fraunces',serif; font-size:17px; font-weight:800; letter-spacing:-0.3px; color:var(--ink); }
+.deal-desc { font-size:12px; color:rgba(28,16,24,0.45); margin-top:4px; line-height:1.55; }
+.deal-bottom { display:flex; align-items:baseline; gap:8px; margin-top:16px; }
+.deal-new { font-family:'Fraunces',serif; font-size:24px; font-weight:900; }
+.deal-old { font-size:14px; color:rgba(28,16,24,0.28); text-decoration:line-through; }
+.deal-pill {
+  margin-left:auto; font-size:11px; font-weight:800;
+  padding:5px 12px; border-radius:100px; white-space:nowrap;
+}
+
+/* ── PERKS ── */
+.perks-section { max-width:1200px; margin:0 auto; padding:0 28px 80px; }
+.perks-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:28px; }
+.perk {
+  background:rgba(255,255,255,0.5); backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.6); border-radius:18px; padding:22px;
+  opacity:0; transform:translateY(18px);
+  transition:opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.75s cubic-bezier(0.22,1,0.36,1);
+}
+.perk.visible { opacity:1; transform:translateY(0); }
+.perk-icon { font-size:28px; display:block; margin-bottom:10px; }
+.perk h4 { font-family:'Fraunces',serif; font-size:15px; font-weight:800; color:var(--ink); }
+.perk p  { font-size:12px; color:rgba(28,16,24,0.45); margin-top:4px; line-height:1.5; }
+
+/* ── FOOTER ── */
+footer {
+  border-top:1px solid rgba(28,16,24,0.08); padding:28px;
+  max-width:1200px; margin:0 auto;
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;
+}
+.footer-logo { font-family:'Fraunces',serif; font-size:17px; font-weight:900; color:var(--ink); }
+.footer-copy { font-size:12px; color:rgba(28,16,24,0.38); }
+footer a { font-size:13px; color:rgba(28,16,24,0.38); text-decoration:none; font-weight:600; transition:color 0.2s; }
+footer a:hover { color:var(--dusty-rose); }
+
+/* ── TOAST ── */
+.toast-msg {
+  position:fixed; bottom:28px; right:28px; background:var(--ink); color:white;
+  padding:13px 22px; border-radius:14px; font-size:14px; font-weight:600;
+  z-index:9000; pointer-events:none; transform:translateY(70px); opacity:0;
+  transition:all 0.35s cubic-bezier(0.22,1,0.36,1);
+}
+.toast-msg.show { transform:translateY(0); opacity:1; }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(22px);} to{opacity:1;transform:translateY(0);} }
+
+@media(max-width:860px) {
+  .hero { grid-template-columns:1fr; padding:48px 20px 20px; }
+  .hero-right { height:360px; }
+  .nav-links { display:none; }
+  footer { flex-direction:column; text-align:center; }
+}
+@media(max-width:500px) {
+  .deals-grid,.perks-grid { gap:12px; }
+  .countdown-wrap,.deals-section,.perks-section { padding-left:16px; padding-right:16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- BG -->
+<div class="bg-layer">
+  <div class="bg-blob bb1"></div><div class="bg-blob bb2"></div>
+  <div class="bg-blob bb3"></div><div class="bg-blob bb4"></div>
+  <div class="bg-blob bb5"></div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar above">
+  <div class="nav-inner">
+    <a href="index.html" class="logo-mark"><span class="logo-dot"></span>PRINTOFY</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="customize.html">Customize</a></li>
+      <li><a href="holi.html" class="active">Holi Sale</a></li>
+      <li><a href="womensday.html">Women's Day</a></li>
+    </ul>
+    <a href="cart.html" class="cart-pill">🛍️ Cart <span class="cart-badge" id="cart-count">0</span></a>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker above">
+  <div class="ticker-inner">
+    <span>✦ Holi Sale — Use <b>HOLI25</b> for 25% off</span>
+    <span class="ticker-sep">·</span>
+    <span>Ends <b>16 March</b> midnight</span>
+    <span class="ticker-sep">·</span>
+    <span>🚀 Free delivery pan-India</span>
+    <span class="ticker-sep">·</span>
+    <span>🎨 Print your <b>festival vibe</b></span>
+    <span class="ticker-sep">·</span>
+    <span>✦ Holi Sale — Use <b>HOLI25</b> for 25% off</span>
+    <span class="ticker-sep">·</span>
+    <span>Ends <b>16 March</b> midnight</span>
+    <span class="ticker-sep">·</span>
+    <span>🚀 Free delivery pan-India</span>
+    <span class="ticker-sep">·</span>
+    <span>🎨 Print your <b>festival vibe</b></span>
+    <span class="ticker-sep">·</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero above">
+
+  <!-- LEFT -->
+  <div class="hero-left">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Holi Special · 14–16 March 2026
+    </div>
+    <h1>
+      <span class="l1">Rang</span>
+      <span class="l2">barse,</span>
+      <span class="l3">prints <em>too.</em></span>
+    </h1>
+    <p class="hero-sub">
+      Soft hues, bold stories. This Holi, wear the festival in muted, earthy tones that feel as good as they look.
+    </p>
+    <div class="hero-ctas">
+      <a href="products.html" class="btn-primary">Shop the Sale →</a>
+      <a href="customize.html" class="btn-outline">Design Yours</a>
+    </div>
+    <div class="code-row">
+      <span class="cr-label">Promo Code</span>
+      <span class="cr-code">HOLI25</span>
+      <button class="cr-copy" id="copyBtn" onclick="copyCode()">Copy Code</button>
+    </div>
+  </div>
+
+  <!-- RIGHT — colour dust visual -->
+  <div class="hero-right">
+    <div class="dust-ring dr1"></div>
+    <div class="dust-ring dr2"></div>
+    <div class="dust-ring dr3"></div>
+
+    <!-- muted colour orbs -->
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="orb o3"></div>
+    <div class="orb o4"></div>
+    <div class="orb o5"></div>
+    <div class="orb o6"></div>
+
+    <!-- centre glass circle -->
+    <div class="dust-center">
+      <span class="dc-pct">25%</span>
+      <span class="dc-off">OFF</span>
+      <span class="dc-code">HOLI25</span>
+    </div>
+
+    <!-- floating colour name tags -->
+    <div class="colour-tag ct1"><span class="ct-dot" style="background:#d4826a;"></span>Gulaal Rose</div>
+    <div class="colour-tag ct2"><span class="ct-dot" style="background:#c8922a;"></span>Turmeric</div>
+    <div class="colour-tag ct3"><span class="ct-dot" style="background:#5c6bc0;"></span>Neel Blue</div>
+    <div class="colour-tag ct4"><span class="ct-dot" style="background:#7a9e7e;"></span>Pista Green</div>
+    <div class="colour-tag ct5"><span class="ct-dot" style="background:#9b7fa6;"></span>Lavender</div>
+    <div class="colour-tag ct6"><span class="ct-dot" style="background:#e8b4a0;"></span>Blush</div>
+  </div>
+
+</section>
+
+<!-- COUNTDOWN -->
+<div class="countdown-wrap above">
+  <div class="cd-inner">
+    <span class="cd-text">⏳ Sale ends in</span>
+    <div class="cd-units" id="countdown"></div>
+  </div>
+</div>
+
+<!-- DEALS -->
+<div class="deals-section above">
+  <span class="s-eyebrow">✦ Festival Deals</span>
+  <h2 class="s-title">More colour,<br><em>less price.</em></h2>
+
+  <div class="deals-grid">
+
+    <div class="deal-card" id="d1">
+      <div class="deal-icon-wrap" style="background:rgba(212,130,106,0.15);">👕</div>
+      <div class="deal-name">T-Shirts</div>
+      <div class="deal-desc">Premium cotton, earthy tones, your boldest Holi design front & centre.</div>
+      <div class="deal-bottom">
+        <span class="deal-new" style="color:var(--dusty-rose);">₹374</span>
+        <span class="deal-old">₹499</span>
+        <span class="deal-pill" style="background:rgba(212,130,106,0.12);color:var(--dusty-rose);">25% OFF</span>
+      </div>
+    </div>
+
+    <div class="deal-card" id="d2" style="transition-delay:0.08s">
+      <div class="deal-icon-wrap" style="background:rgba(155,127,166,0.15);">🧥</div>
+      <div class="deal-name">Hoodies</div>
+      <div class="deal-desc">340 GSM fleece, boxy silhouette, festival-ready custom print.</div>
+      <div class="deal-bottom">
+        <span class="deal-new" style="color:var(--mauve);">₹974</span>
+        <span class="deal-old">₹1299</span>
+        <span class="deal-pill" style="background:rgba(155,127,166,0.12);color:var(--mauve);">25% OFF</span>
+      </div>
+    </div>
+
+    <div class="deal-card" id="d3" style="transition-delay:0.16s">
+      <div class="deal-icon-wrap" style="background:rgba(200,146,42,0.15);">🖼️</div>
+      <div class="deal-name">Posters & Prints</div>
+      <div class="deal-desc">A3 matte, A2 gloss, framed wall prints — your art, your wall.</div>
+      <div class="deal-bottom">
+        <span class="deal-new" style="color:var(--turmeric);">₹209</span>
+        <span class="deal-old">₹299</span>
+        <span class="deal-pill" style="background:rgba(200,146,42,0.12);color:var(--turmeric);">30% OFF</span>
+      </div>
+    </div>
+
+    <div class="deal-card" id="d4" style="transition-delay:0.24s">
+      <div class="deal-icon-wrap" style="background:rgba(122,158,126,0.15);">🌟</div>
+      <div class="deal-name">Sticker Packs</div>
+      <div class="deal-desc">Die-cut & holographic stickers — carry the festival everywhere.</div>
+      <div class="deal-bottom">
+        <span class="deal-new" style="color:var(--sage);">₹149</span>
+        <span class="deal-old">₹298 ×2</span>
+        <span class="deal-pill" style="background:rgba(122,158,126,0.12);color:var(--sage);">Buy 2 Get 1</span>
+      </div>
+    </div>
+
+    <div class="deal-card" id="d5" style="transition-delay:0.32s">
+      <div class="deal-icon-wrap" style="background:rgba(92,107,192,0.15);">☕</div>
+      <div class="deal-name">Mugs</div>
+      <div class="deal-desc">Ceramic, magic colour-change, travel tumbler. Start mornings right.</div>
+      <div class="deal-bottom">
+        <span class="deal-new" style="color:var(--indigo);">₹279</span>
+        <span class="deal-old">₹349</span>
+        <span class="deal-pill" style="background:rgba(92,107,192,0.12);color:var(--indigo);">20% OFF</span>
+      </div>
+    </div>
+
+    <div class="deal-card" id="d6" style="transition-delay:0.40s">
+      <div class="deal-icon-wrap" style="background:rgba(232,180,160,0.2);">🎁</div>
+      <div class="deal-name">Holi Gift Bundle</div>
+      <div class="deal-desc">T-shirt + Mug + Sticker pack — custom, gift-wrapped, ready to give.</div>
+      <div class="deal-bottom">
+        <span class="deal-new" style="color:var(--dusty-rose);">₹799</span>
+        <span class="deal-old">₹1099</span>
+        <span class="deal-pill" style="background:rgba(212,130,106,0.12);color:var(--dusty-rose);">Bundle Deal</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PERKS -->
+<div class="perks-section above">
+  <span class="s-eyebrow">✦ Why PRINTOFY</span>
+  <h2 class="s-title" style="margin-bottom:0;">Holi <em>perks.</em></h2>
+  <div class="perks-grid" style="margin-top:28px;">
+    <div class="perk" id="p1"><span class="perk-icon">🚀</span><h4>Express by Holi</h4><p>Order by 13 March. Receive before the festival. Priority queue guaranteed.</p></div>
+    <div class="perk" id="p2" style="transition-delay:0.1s"><span class="perk-icon">🎨</span><h4>Free Customization</h4><p>Upload your design or use our studio — zero extra charge, ever.</p></div>
+    <div class="perk" id="p3" style="transition-delay:0.2s"><span class="perk-icon">🌿</span><h4>Earthy Colour Palette</h4><p>14+ product colours in soft, muted, festival-inspired tones.</p></div>
+    <div class="perk" id="p4" style="transition-delay:0.3s"><span class="perk-icon">🤝</span><h4>100% Guarantee</h4><p>Love it or we reprint it — completely free, no questions asked.</p></div>
+  </div>
+</div>
+
+<footer class="above">
+  <span class="footer-logo">PRINTOFY</span>
+  <span class="footer-copy">© 2026 PRINTOFY · print your vibe ✦</span>
+  <a href="womensday.html">Also: Women's Day Sale →</a>
+</footer>
+
+<div class="toast-msg" id="toast"></div>
+
+<script>
+// cart
+const cart = JSON.parse(localStorage.getItem('cart')) || [];
+document.getElementById('cart-count').textContent = cart.length;
+
+// copy
+function copyCode() {
+  navigator.clipboard.writeText('HOLI25').catch(()=>{});
+  const btn = document.getElementById('copyBtn');
+  btn.textContent = '✓ Copied!';
+  setTimeout(() => btn.textContent = 'Copy Code', 2200);
+  showToast('🎨 Code HOLI25 copied! Use it at checkout.');
+}
+
+// countdown to 17 March 2026 00:00 IST
+function tick() {
+  const diff = Math.max(0, new Date('2026-03-17T00:00:00+05:30') - Date.now());
+  const pad = n => String(Math.floor(n)).padStart(2,'0');
+  const d = diff/86400000, h = (diff%86400000)/3600000,
+        m = (diff%3600000)/60000, s = (diff%60000)/1000;
+  document.getElementById('countdown').innerHTML =
+    [[pad(d),'Days'],[pad(h),'Hrs'],[pad(m),'Min'],[pad(s),'Sec']]
+    .map(([v,l],i) =>
+      `${i>0?'<span class="cd-sep">:</span>':''}<div class="cd-unit"><span class="cd-val">${v}</span><span class="cd-lbl">${l}</span></div>`
+    ).join('');
+}
+tick(); setInterval(tick, 1000);
+
+// reveal
+const ids = ['d1','d2','d3','d4','d5','d6','p1','p2','p3','p4'];
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }});
+}, { threshold:0.1 });
+ids.forEach(id => { const el=document.getElementById(id); if(el) obs.observe(el); });
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(window._tt);
+  window._tt = setTimeout(() => t.classList.remove('show'), 3000);
+}
+</script>
+</body>
+</html>

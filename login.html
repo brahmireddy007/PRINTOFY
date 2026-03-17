@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | PRINTOFY</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+    :root{
+      --ink:#2A2A2A;
+      --cream:#F9F5ED;
+
+      --red:#902124;
+      --blue:#8EB9FF;
+      --wine:#4D0011;
+      --blush:#C2858C;
+
+      --lavender:var(--blue);
+      --mint:rgba(142,185,255,0.35);
+      --gold:var(--blush);
+    }
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+
+    body{
+      margin:0;
+      font-family:'DM Sans',sans-serif;
+      min-height:100vh;
+      color:var(--ink);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:90px 18px 40px;
+      overflow-x:hidden;
+
+      background:
+        radial-gradient(950px 650px at 14% 18%, rgba(142,185,255,0.90), transparent 60%),
+        radial-gradient(980px 700px at 88% 22%, rgba(194,133,140,0.82), transparent 62%),
+        radial-gradient(1050px 750px at 55% 95%, rgba(144,33,36,0.65), transparent 60%),
+        linear-gradient(135deg, rgba(77,0,17,0.60) 0%, rgba(249,245,237,1) 48%, rgba(142,185,255,0.55) 100%);
+    }
+
+    /* noise overlay */
+    body::before{
+      content:'';
+      position:fixed; inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events:none;
+      z-index:9999;
+    }
+
+    /* blobs like homepage/cart */
+    .blob{
+      position:fixed;
+      border-radius:50%;
+      filter: blur(90px);
+      pointer-events:none;
+      z-index:0;
+    }
+    .blob-1{
+      width:520px;
+      height:520px;
+      background:rgba(142,185,255,0.95);
+      top:-220px;
+      right:-170px;
+      opacity:.22;
+    }
+    .blob-2{
+      width:380px;
+      height:380px;
+      background:rgba(194,133,140,0.85);
+      bottom:-140px;
+      left:-120px;
+      opacity:.16;
+    }
+    .blob-3{
+      width:280px;
+      height:280px;
+      background:rgba(144,33,36,0.65);
+      top:45%;
+      left:40%;
+      opacity:.12;
+      filter: blur(110px);
+    }
+
+    /* navbar aligned with your other pages */
+    .navbar{
+      position:fixed;
+      top:0; left:0; right:0;
+      z-index:100;
+      background: rgba(249,245,237,0.78);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(26,16,37,0.07);
+      padding: 14px 0;
+    }
+
+    .logo-mark{
+      font-family:'Fraunces',serif;
+      font-weight:900;
+      font-size:20px;
+      color:var(--ink);
+      text-decoration:none;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .logo-dot{
+      width:9px;
+      height:9px;
+      border-radius:50%;
+      background: linear-gradient(135deg, var(--blue), var(--red));
+    }
+
+    .back-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      font-size:13px;
+      font-weight:600;
+      color: rgba(26,16,37,0.55);
+      text-decoration:none;
+      padding:7px 16px;
+      border: 1.5px solid rgba(26,16,37,0.12);
+      border-radius: 100px;
+      transition: all .2s;
+    }
+    .back-btn:hover{
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
+    /* auth card */
+    .auth-wrap{
+      position:relative;
+      z-index:1;
+      width:min(440px, 100%);
+    }
+
+    .auth-box{
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(26,16,37,0.08);
+      border-radius: 28px;
+      padding: 34px 30px 28px;
+      box-shadow: 0 18px 55px rgba(26,16,37,0.10);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .brand-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 14px;
+      border-radius: 999px;
+      background: rgba(249,245,237,0.85);
+      border: 1px solid rgba(26,16,37,0.10);
+      margin-bottom: 18px;
+    }
+
+    .brand-name{
+      font-family:'Fraunces',serif;
+      font-weight:900;
+      letter-spacing:-0.5px;
+    }
+
+    .brand-spark{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background: linear-gradient(135deg, var(--blue), var(--red));
+    }
+
+    .auth-title{
+      font-family:'Fraunces',serif;
+      font-weight:900;
+      letter-spacing:-0.8px;
+      font-size: 30px;
+      margin: 4px 0 6px;
+    }
+
+    .auth-sub{
+      color: rgba(26,16,37,0.55);
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    /* inputs */
+    .form-control{
+      border-radius: 16px;
+      padding: 12px 14px;
+      border: 1.5px solid rgba(26,16,37,0.12);
+      background: rgba(249,245,237,0.70);
+      font-weight: 500;
+    }
+
+    .form-control:focus{
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(142,185,255,0.25);
+      background: rgba(249,245,237,0.92);
+    }
+
+    .error{
+      font-size: 12px;
+      color: #d1002a;
+      margin: 6px 0 6px;
+    }
+
+    .terms-wrap{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .terms-wrap input[type="checkbox"]{
+      margin-top:3px;
+      accent-color: var(--red);
+      transform: scale(1.05);
+    }
+
+    .terms-label{
+      font-size:13px;
+      color: rgba(26,16,37,0.62);
+      line-height:1.5;
+      margin:0;
+    }
+
+    /* primary button */
+    .btn-main{
+      width:100%;
+      border:none;
+      border-radius: 16px;
+      padding: 12px 14px;
+      font-weight: 700;
+      background: linear-gradient(135deg,var(--wine),var(--red));
+      color: white;
+      transition: transform .18s, box-shadow .18s, background .18s;
+    }
+
+    .btn-main:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(26,16,37,0.18);
+      background: linear-gradient(135deg,var(--red),var(--wine));
+    }
+
+    /* small links */
+    .text-small{
+      font-size: 13px;
+      color: rgba(26,16,37,0.55);
+    }
+
+    a{
+      color: var(--red);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    a:hover{ text-decoration: underline; }
+
+    .helper-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-top: 10px;
+    }
+
+    .divider{
+      height:1px;
+      background: rgba(26,16,37,0.08);
+      margin: 18px 0 16px;
+    }
+
+    @media (max-width: 420px){
+      .auth-box{ padding: 28px 22px 22px; }
+      .auth-title{ font-size: 26px; }
+    }
+    </style>
+</head>
+
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+
+<nav class="navbar">
+  <div class="container d-flex align-items-center justify-content-between">
+    <a href="index.php" class="logo-mark">
+      <span class="logo-dot"></span>
+      PRINTOFY
+    </a>
+    <a href="index.php" class="back-btn">← Back to Dashboard</a>
+  </div>
+</nav>
+
+<div class="auth-wrap">
+  <div class="auth-box">
+
+    <div class="brand-pill">
+      <span class="brand-spark"></span>
+      <span class="brand-name">printofy</span>
+      <span class="text-small" style="margin-left:4px;">print your vibe ✦</span>
+    </div>
+
+    <h1 class="auth-title">login</h1>
+    <p class="auth-sub">get in, pick a product, and bully your cart (respectfully).</p>
+
+    <form action="login.php" method="POST" novalidate>
+
+      <input type="email" name="email" id="email" class="form-control" placeholder="email address" required>
+      <div class="error" id="emailError"></div>
+
+      <input type="password" name="password" id="password" class="form-control mt-2" placeholder="password" required>
+      <div class="error" id="passwordError"></div>
+
+      <div class="helper-row">
+        <span class="text-small">new here? <a href="register.html">sign up</a></span>
+        <span class="text-small"><a href="forgot_reset.html">forgot?</a></span>
+      </div>
+
+      <div class="terms-wrap">
+        <input type="checkbox" name="terms" id="terms">
+        <label for="terms" class="terms-label">
+          i agree to the <a href="terms.html">terms & conditions</a> and <a href="privacy.html">privacy policy</a>.
+        </label>
+      </div>
+      <div class="error" id="termsError"></div>
+
+      <button type="submit" class="btn-main mt-3">login →</button>
+
+      <div class="divider"></div>
+
+      <p class="text-small mb-0">
+        by logging in, you agree to not blame printofy for your impulse purchases 😭
+      </p>
+
+    </form>
+  </div>
+</div>
+
+<script>
+  const form = document.querySelector("form");
+
+  form.addEventListener("submit", (e) => {
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const terms = document.getElementById("terms");
+
+    const emailErr = document.getElementById("emailError");
+    const passErr = document.getElementById("passwordError");
+    const termsErr = document.getElementById("termsError");
+
+    emailErr.textContent = "";
+    passErr.textContent = "";
+    termsErr.textContent = "";
+
+    let ok = true;
+
+    if (!email.value.trim()) {
+      emailErr.textContent = "email pls. don’t be mysterious rn.";
+      ok = false;
+    }
+
+    if (!password.value.trim()) {
+      passErr.textContent = "password missing bestie.";
+      ok = false;
+    }
+
+    if (!terms.checked) {
+      termsErr.textContent = "you need to accept the terms and conditions before logging in.";
+      ok = false;
+    }
+
+    if (!ok) e.preventDefault();
+  });
+</script>
+
+</body>
+</html>

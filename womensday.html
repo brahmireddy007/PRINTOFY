@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Women's Day Sale 💜 — PRINTOFY</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:     #1a0a2e;
+  --rose:    #e91e8c;
+  --purple:  #6c3fc5;
+  --violet:  #9b4dca;
+  --blush:   #fda4af;
+  --lavender:#c084fc;
+  --cream:   #fff5f9;
+  --gold:    #f5c842;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  font-family:'DM Sans',sans-serif;
+  color: var(--ink);
+  overflow-x: hidden; min-height:100vh;
+}
+
+/* ── BG ── */
+.bg-layer {
+  position:fixed; inset:0; z-index:0;
+  background: #fff5f9;
+}
+.bg-layer::before {
+  content:''; position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 75% 65% at 80% 15%, rgba(233,30,140,0.18) 0%, transparent 58%),
+    radial-gradient(ellipse 65% 60% at 15% 70%, rgba(192,132,252,0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 55% at 90% 80%, rgba(253,164,175,0.2)  0%, transparent 50%),
+    radial-gradient(ellipse 70% 50% at 50% 45%, rgba(255,240,248,0.6)  0%, transparent 58%),
+    radial-gradient(ellipse 40% 55% at 5%  10%, rgba(156,64,202,0.14)  0%, transparent 50%);
+}
+.bg-blob {
+  position:absolute; border-radius:50%; filter:blur(100px);
+  animation:bgFloat ease-in-out infinite alternate;
+}
+.bb1 { width:600px; height:600px; background:rgba(233,30,140,0.14); top:-200px; right:-120px; animation-duration:16s; }
+.bb2 { width:500px; height:500px; background:rgba(192,132,252,0.18); bottom:-100px; left:-100px; animation-duration:13s; animation-direction:alternate-reverse; }
+.bb3 { width:350px; height:350px; background:rgba(253,164,175,0.2);  top:35%; left:35%; animation-duration:19s; }
+.bb4 { width:280px; height:280px; background:rgba(156,64,202,0.12);  bottom:20%; right:10%; animation-duration:14s; animation-direction:alternate-reverse; }
+@keyframes bgFloat {
+  from { transform:translate(0,0) scale(1); }
+  to   { transform:translate(30px,20px) scale(1.08); }
+}
+.bg-layer::after {
+  content:''; position:absolute; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;
+}
+
+.above { position:relative; z-index:1; }
+
+/* ── NAVBAR ── */
+.navbar {
+  position:sticky; top:0; z-index:200;
+  background:rgba(255,245,249,0.6);
+  backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px);
+  border-bottom:1px solid rgba(233,30,140,0.1); padding:13px 0;
+}
+.nav-inner {
+  max-width:1200px; margin:0 auto; padding:0 28px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.logo-mark {
+  font-family:'Fraunces',serif; font-weight:900; font-size:20px;
+  color:var(--ink); text-decoration:none; display:flex; align-items:center; gap:8px;
+}
+.logo-dot { width:9px; height:9px; border-radius:50%; background:linear-gradient(135deg,var(--rose),var(--lavender)); }
+.nav-links { display:flex; align-items:center; gap:24px; list-style:none; }
+.nav-links a { font-size:13px; font-weight:500; color:rgba(26,10,46,0.55); text-decoration:none; transition:color 0.2s; }
+.nav-links a:hover,.nav-links a.active { color:var(--ink); }
+.cart-pill {
+  display:flex; align-items:center; gap:6px;
+  background:var(--ink); color:white; padding:8px 16px; border-radius:100px;
+  font-size:13px; font-weight:600; text-decoration:none; transition:transform 0.18s;
+}
+.cart-pill:hover { transform:translateY(-1px); color:white; }
+.cart-badge { background:var(--rose); color:white; font-size:10px; font-weight:700; width:17px; height:17px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+
+/* ── ROSE TICKER ── */
+.ticker {
+  background:linear-gradient(90deg,var(--rose),var(--violet),var(--lavender),var(--rose));
+  background-size:300% 100%; animation:roseShift 4s linear infinite;
+  padding:10px 0; overflow:hidden;
+}
+@keyframes roseShift { 0%{background-position:0% 50%} 100%{background-position:100% 50%} }
+.ticker-inner { display:flex; gap:60px; animation:marquee 20s linear infinite; width:max-content; }
+.ticker-inner span { font-size:12px; font-weight:700; color:white; white-space:nowrap; letter-spacing:0.04em; }
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ── FALLING PETALS ── */
+#petals { position:fixed; inset:0; pointer-events:none; z-index:2; overflow:hidden; }
+.petal {
+  position:absolute; top:-40px; pointer-events:none;
+  animation:petalFall linear infinite;
+  user-select:none;
+}
+@keyframes petalFall {
+  0%   { transform:translateY(0) rotate(0deg) translateX(0);   opacity:0; }
+  8%   { opacity:0.75; }
+  90%  { opacity:0.5; }
+  100% { transform:translateY(105vh) rotate(540deg) translateX(30px); opacity:0; }
+}
+
+/* ── HERO ── */
+.hero {
+  min-height:88vh; display:flex; align-items:center;
+  position:relative; overflow:hidden; padding:60px 0;
+}
+.hero-inner { max-width:1200px; margin:0 auto; padding:0 28px; z-index:3; position:relative; }
+
+/* decorative large circle */
+.hero-circle {
+  position:absolute; right:-80px; top:50%; transform:translateY(-50%);
+  width:520px; height:520px; border-radius:50%;
+  border:1.5px solid rgba(233,30,140,0.12);
+  pointer-events:none; z-index:1;
+  animation:circlePulse 6s ease-in-out infinite;
+}
+.hero-circle::before {
+  content:''; position:absolute; inset:40px;
+  border-radius:50%; border:1px solid rgba(233,30,140,0.08);
+}
+.hero-circle::after {
+  content:''; position:absolute; inset:90px;
+  border-radius:50%; border:1px solid rgba(233,30,140,0.06);
+}
+@keyframes circlePulse {
+  0%,100% { transform:translateY(-50%) scale(1); opacity:1; }
+  50%      { transform:translateY(-50%) scale(1.03); opacity:0.8; }
+}
+
+.hero-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(233,30,140,0.08); border:1px solid rgba(233,30,140,0.2);
+  border-radius:100px; padding:7px 18px;
+  font-size:12px; font-weight:700; color:var(--rose);
+  text-transform:uppercase; letter-spacing:0.1em; margin-bottom:28px;
+  opacity:0; animation:fadeUp 0.6s 0.1s forwards;
+}
+
+.hero h1 {
+  font-family:'Fraunces',serif; font-weight:900;
+  font-size:clamp(52px,8.5vw,100px);
+  line-height:0.9; letter-spacing:-2.5px; color:var(--ink);
+  opacity:0; animation:fadeUp 0.7s 0.2s forwards;
+}
+.hero h1 .rose-italic  { font-style:italic; color:var(--rose);   display:block; }
+.hero h1 .purple-word  { color:var(--purple); }
+.hero h1 .normal-line  { display:block; }
+
+.hero-sub {
+  font-size:17px; color:rgba(26,10,46,0.55); margin-top:22px;
+  max-width:460px; line-height:1.65;
+  opacity:0; animation:fadeUp 0.7s 0.38s forwards;
+}
+
+.hero-ctas {
+  display:flex; gap:14px; margin-top:36px; flex-wrap:wrap;
+  opacity:0; animation:fadeUp 0.7s 0.52s forwards;
+}
+.btn-primary {
+  background:linear-gradient(135deg,var(--rose),var(--purple));
+  color:white; border:none; padding:15px 34px; border-radius:100px;
+  font-family:'DM Sans',sans-serif; font-size:15px; font-weight:700; cursor:pointer;
+  box-shadow:0 8px 30px rgba(233,30,140,0.3);
+  transition:transform 0.18s, box-shadow 0.18s;
+  text-decoration:none; display:inline-block;
+}
+.btn-primary:hover { transform:translateY(-3px); box-shadow:0 14px 40px rgba(233,30,140,0.4); color:white; }
+.btn-ghost {
+  background:rgba(233,30,140,0.07); color:var(--ink);
+  border:1.5px solid rgba(233,30,140,0.2);
+  padding:15px 34px; border-radius:100px;
+  font-size:15px; font-weight:600; cursor:pointer; transition:background 0.18s;
+}
+.btn-ghost:hover { background:rgba(233,30,140,0.13); }
+
+/* code strip */
+.code-strip {
+  display:inline-flex; align-items:center; gap:0; margin-top:36px;
+  background:rgba(255,255,255,0.8); backdrop-filter:blur(12px);
+  border:1.5px solid rgba(233,30,140,0.2); border-radius:16px; overflow:hidden;
+  box-shadow:0 4px 24px rgba(233,30,140,0.1);
+  opacity:0; animation:fadeUp 0.7s 0.68s forwards;
+}
+.cs-label { padding:14px 16px; font-size:12px; font-weight:600; color:rgba(26,10,46,0.4); white-space:nowrap; }
+.cs-code  { padding:14px 18px; font-family:'Fraunces',serif; font-size:22px; font-weight:900; color:var(--rose); letter-spacing:0.06em; background:linear-gradient(135deg,rgba(233,30,140,0.05),rgba(192,132,252,0.05)); }
+.cs-copy  {
+  padding:13px 20px;
+  background:linear-gradient(135deg,var(--rose),var(--purple));
+  color:white; border:none; font-size:13px; font-weight:800; cursor:pointer;
+  font-family:'DM Sans',sans-serif; transition:opacity 0.2s; white-space:nowrap;
+}
+.cs-copy:hover { opacity:0.88; }
+.cs-expiry { padding:0 16px; font-size:11px; color:rgba(26,10,46,0.35); font-weight:600; white-space:nowrap; }
+
+/* ── DEALS ── */
+.deals-section { max-width:1200px; margin:80px auto 0; padding:0 28px; }
+.section-eyebrow { font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--rose); margin-bottom:12px; display:block; }
+.section-title { font-family:'Fraunces',serif; font-size:clamp(28px,3.5vw,44px); font-weight:900; letter-spacing:-1px; line-height:1.05; color:var(--ink); }
+.section-title em { font-style:italic; color:var(--rose); }
+
+.deals-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin-top:36px; }
+.deal-card {
+  background:rgba(255,255,255,0.72); backdrop-filter:blur(16px);
+  border:1px solid rgba(233,30,140,0.1); border-radius:22px; padding:26px;
+  opacity:0; transform:translateY(32px);
+  transition:opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1), box-shadow 0.28s;
+}
+.deal-card.visible { opacity:1; transform:translateY(0); }
+.deal-card:hover { box-shadow:0 18px 50px rgba(233,30,140,0.12); transform:translateY(-5px); }
+.deal-emoji-wrap { width:52px; height:52px; border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:25px; margin-bottom:16px; }
+.deal-name { font-family:'Fraunces',serif; font-size:18px; font-weight:800; letter-spacing:-0.3px; color:var(--ink); }
+.deal-desc { font-size:13px; color:rgba(26,10,46,0.45); margin-top:5px; line-height:1.5; }
+.deal-price-row { display:flex; align-items:baseline; gap:10px; margin-top:16px; }
+.deal-new { font-family:'Fraunces',serif; font-size:26px; font-weight:900; }
+.deal-old { font-size:15px; color:rgba(26,10,46,0.3); text-decoration:line-through; }
+.deal-badge { margin-left:auto; font-size:11px; font-weight:800; padding:5px 12px; border-radius:100px; white-space:nowrap; }
+
+/* ── FEATURE STRIP ── */
+.feature-strip {
+  max-width:1200px; margin:60px auto 0; padding:0 28px;
+  background:rgba(255,255,255,0); 
+}
+.feature-inner {
+  background:linear-gradient(135deg,rgba(233,30,140,0.08),rgba(192,132,252,0.08));
+  border:1px solid rgba(233,30,140,0.12); border-radius:28px;
+  padding:40px 44px; display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:30px;
+  text-align:center;
+  opacity:0; transform:translateY(24px);
+  transition:opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s;
+}
+.feature-inner.visible { opacity:1; transform:translateY(0); }
+.feat-icon { font-size:30px; display:block; margin-bottom:10px; }
+.feat-title { font-family:'Fraunces',serif; font-size:15px; font-weight:800; color:var(--ink); }
+.feat-desc { font-size:12px; color:rgba(26,10,46,0.45); margin-top:4px; line-height:1.5; }
+
+/* ── QUOTE SECTION ── */
+.quote-section {
+  max-width:800px; margin:80px auto 0; padding:0 28px; text-align:center;
+  opacity:0; transform:translateY(24px);
+  transition:opacity 1s cubic-bezier(0.22,1,0.36,1), transform 1s;
+}
+.quote-section.visible { opacity:1; transform:translateY(0); }
+.quote-mark { font-family:'Fraunces',serif; font-size:80px; color:rgba(233,30,140,0.15); line-height:0.6; display:block; margin-bottom:16px; }
+.quote-text {
+  font-family:'Fraunces',serif; font-size:clamp(22px,3vw,34px); font-weight:700;
+  font-style:italic; line-height:1.3; letter-spacing:-0.5px; color:var(--ink);
+}
+.quote-text em { color:var(--rose); }
+.quote-sub { font-size:14px; color:rgba(26,10,46,0.4); margin-top:16px; font-weight:500; }
+
+/* ── FOOTER ── */
+footer {
+  border-top:1px solid rgba(233,30,140,0.1); margin-top:80px; padding:28px;
+  max-width:1200px; margin-left:auto; margin-right:auto;
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;
+}
+.footer-logo { font-family:'Fraunces',serif; font-size:17px; font-weight:900; color:var(--ink); }
+.footer-copy { font-size:12px; color:rgba(26,10,46,0.38); }
+
+/* ── TOAST ── */
+.toast-msg {
+  position:fixed; bottom:28px; right:28px; background:var(--ink); color:white;
+  padding:13px 22px; border-radius:14px; font-size:14px; font-weight:600;
+  z-index:9000; pointer-events:none; transform:translateY(70px); opacity:0;
+  transition:all 0.35s cubic-bezier(0.22,1,0.36,1);
+}
+.toast-msg.show { transform:translateY(0); opacity:1; }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(22px);} to{opacity:1;transform:translateY(0);} }
+
+@media(max-width:768px) {
+  .nav-links { display:none; }
+  .hero-circle { display:none; }
+  .hero h1 { font-size:clamp(44px,11vw,68px); }
+  footer { flex-direction:column; text-align:center; }
+}
+</style>
+</head>
+<body>
+
+<!-- BG -->
+<div class="bg-layer">
+  <div class="bg-blob bb1"></div><div class="bg-blob bb2"></div>
+  <div class="bg-blob bb3"></div><div class="bg-blob bb4"></div>
+</div>
+
+<!-- PETALS -->
+<div id="petals"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar above">
+  <div class="nav-inner">
+    <a href="index.html" class="logo-mark"><span class="logo-dot"></span>PRINTOFY</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="customize.html">Customize</a></li>
+      <li><a href="holi.html">Holi Sale</a></li>
+      <li><a href="womensday.html" class="active">Women's Day</a></li>
+    </ul>
+    <a href="cart.html" class="cart-pill">🛍️ Cart <span class="cart-badge" id="cart-count">0</span></a>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker above">
+  <div class="ticker-inner">
+    <span>💜 Women's Day Sale — Use QUEEN20 for 20% OFF</span><span>•</span>
+    <span>🌸 Free gift wrapping on all orders</span><span>•</span>
+    <span>💌 Add a free personalised card</span><span>•</span>
+    <span>🚀 Delivered with love</span><span>•</span>
+    <span>💜 Women's Day Sale — Use QUEEN20 for 20% OFF</span><span>•</span>
+    <span>🌸 Free gift wrapping on all orders</span><span>•</span>
+    <span>💌 Add a free personalised card</span><span>•</span>
+    <span>🚀 Delivered with love</span><span>•</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero above">
+  <div class="hero-circle"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">💜 Women's Day · 8 March 2026</div>
+    <h1>
+      <span class="rose-italic">She creates.</span>
+      <span class="normal-line">She <span class="purple-word">wears</span></span>
+      <span class="normal-line">her story.</span>
+    </h1>
+    <p class="hero-sub">
+      A special collection for every woman who lives boldly. Custom prints that celebrate her — to gift, to wear, to remember.
+    </p>
+    <div class="hero-ctas">
+      <a href="products.html" class="btn-primary">Shop Women's Day →</a>
+      <a href="customize.html" class="btn-ghost">Design Her Gift</a>
+    </div>
+    <div class="code-strip">
+      <span class="cs-label">Your Code</span>
+      <span class="cs-code">QUEEN20</span>
+      <button class="cs-copy" id="copyBtn" onclick="copyCode()">Copy ♥</button>
+      <span class="cs-expiry">Valid 1–10 March</span>
+    </div>
+  </div>
+</section>
+
+<!-- DEALS -->
+<div class="deals-section above">
+  <span class="section-eyebrow">✦ Women's Day Deals</span>
+  <h2 class="section-title">Gifts she'll <em>actually</em> love.</h2>
+
+  <div class="deals-grid">
+
+    <div class="deal-card" id="d1" style="transition-delay:0s;">
+      <div class="deal-emoji-wrap" style="background:rgba(233,30,140,0.1);">👜</div>
+      <h3 class="deal-name">Tote Bags</h3>
+      <p class="deal-desc">Canvas, rope handle, beach totes — carry your art to every corner of life.</p>
+      <div class="deal-price-row">
+        <span class="deal-new" style="color:var(--rose);">₹319</span>
+        <span class="deal-old">₹399</span>
+        <span class="deal-badge" style="background:rgba(233,30,140,0.1);color:var(--rose);">20% OFF</span>
+      </div>
+    </div>
+
+    <div class="deal-card" id="d2" style="transition-delay:0.1s;">
+      <div class="deal-emoji-wrap" style="background:rgba(192,132,252,0.15);">🧢</div>
+      <h3 class="deal-name">Caps & Beanies</h3>
+      <p class="deal-desc">Dad caps, bucket hats, beanies — custom printed, endlessly stylish.</p>
+      <div class="deal-price-row">
+        <span class="deal-new" style="color:var(--violet);">₹479</span>
+        <span class="deal-old">₹599</span>
+        <span class="deal-badge" style="background:rgba(192,132,252,0.15);color:var(--violet);">20% OFF</span>
+      </div>
+    </div>
+
+    <div class="deal-card" id="d3" style="transition-delay:0.2s;">
+      <div class="deal-emoji-wrap" style="background:rgba(253,164,175,0.2);">☕</div>
+      <h3 class="deal-name">Mugs & Tumblers</h3>
+      <p class="deal-desc">Morning coffee tastes better from a mug that tells her story.</p>
+      <div class="deal-price-row">
+        <span class="deal-new" style="color:#e63950;">₹297</span>
+        <span class="deal-old">₹349</span>
+        <span class="deal-badge" style="background:rgba(253,164,175,0.2);color:#e63950;">15% OFF</span>
+      </div>
+    </div>
+
+    <div class="deal-card" id="d4" style="transition-delay:0.3s;">
+      <div class="deal-emoji-wrap" style="background:rgba(156,64,202,0.12);">📓</div>
+      <h3 class="deal-name">Notebooks</h3>
+      <p class="deal-desc">Hardcovers, sketchbooks, mini journals — for the woman who writes her own story.</p>
+      <div class="deal-price-row">
+        <span class="deal-new" style="color:var(--purple);">₹449</span>
+        <span class="deal-old">₹898 for 2</span>
+        <span class="deal-badge" style="background:rgba(156,64,202,0.12);color:var(--purple);">Buy 2 Get 1</span>
+      </div>
+    </div>
+
+    <div class="deal-card" id="d5" style="transition-delay:0.4s;">
+      <div class="deal-emoji-wrap" style="background:rgba(233,30,140,0.08);">🛋️</div>
+      <h3 class="deal-name">Throw Pillows</h3>
+      <p class="deal-desc">A photo memory pillow she'll actually cuddle. The softest gift.</p>
+      <div class="deal-price-row">
+        <span class="deal-new" style="color:var(--rose);">₹559</span>
+        <span class="deal-old">₹699</span>
+        <span class="deal-badge" style="background:rgba(233,30,140,0.08);color:var(--rose);">20% OFF</span>
+      </div>
+    </div>
+
+    <div class="deal-card" id="d6" style="transition-delay:0.5s;">
+      <div class="deal-emoji-wrap" style="background:rgba(245,200,66,0.15);">🎁</div>
+      <h3 class="deal-name">Women's Gift Set</h3>
+      <p class="deal-desc">Tote + Mug + Notebook — custom, gift-wrapped, with a personalised card. Free.</p>
+      <div class="deal-price-row">
+        <span class="deal-new" style="color:#c8860b;">₹899</span>
+        <span class="deal-old">₹1247</span>
+        <span class="deal-badge" style="background:rgba(245,200,66,0.18);color:#c8860b;">Best Value</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="feature-strip above" style="margin-top:60px;">
+  <div class="feature-inner" id="featureInner">
+    <div>
+      <span class="feat-icon">🌸</span>
+      <div class="feat-title">Free Gift Wrapping</div>
+      <p class="feat-desc">Every Women's Day order comes beautifully wrapped, no extra charge.</p>
+    </div>
+    <div>
+      <span class="feat-icon">💌</span>
+      <div class="feat-title">Personalised Card</div>
+      <p class="feat-desc">Add your own message — we'll print it handwritten-style inside.</p>
+    </div>
+    <div>
+      <span class="feat-icon">🚀</span>
+      <div class="feat-title">Delivered on Time</div>
+      <p class="feat-desc">Order by 6 March and receive before Women's Day. Guaranteed.</p>
+    </div>
+    <div>
+      <span class="feat-icon">💎</span>
+      <div class="feat-title">Premium Quality</div>
+      <p class="feat-desc">Vivid, lasting prints on materials she'll actually love using daily.</p>
+    </div>
+  </div>
+</div>
+
+<!-- QUOTE -->
+<div class="quote-section above" id="quoteSection">
+  <span class="quote-mark">"</span>
+  <p class="quote-text">
+    "A woman who wears her <em>own art</em> is a woman who owns her story."
+  </p>
+  <p class="quote-sub">— PRINTOFY · Celebrating Women's Day 2026</p>
+</div>
+
+<footer class="above" style="margin-top:80px;">
+  <span class="footer-logo">PRINTOFY</span>
+  <span class="footer-copy">© 2026 PRINTOFY · print your vibe ✦ Made with ❤️ in India</span>
+  <a href="holi.html" style="font-size:13px;color:rgba(26,10,46,0.4);text-decoration:none;font-weight:600;">Also see: Holi Sale →</a>
+</footer>
+
+<div class="toast-msg" id="toast"></div>
+
+<script>
+// cart
+const cart = JSON.parse(localStorage.getItem('cart')) || [];
+document.getElementById('cart-count').textContent = cart.length;
+
+// copy code
+function copyCode() {
+  navigator.clipboard.writeText('QUEEN20').catch(()=>{});
+  const btn = document.getElementById('copyBtn');
+  btn.textContent = '✓ Copied! ♥';
+  setTimeout(() => btn.textContent = 'Copy ♥', 2200);
+  showToast('💜 Code QUEEN20 copied! Use it at checkout.');
+}
+
+// rose petals
+const petalEmojis = ['🌸','🌺','🌷','💮','🌹','✿','❀'];
+const container = document.getElementById('petals');
+for (let i = 0; i < 18; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  p.textContent = petalEmojis[i % petalEmojis.length];
+  p.style.cssText = `
+    left:${Math.random()*100}%;
+    font-size:${13 + Math.random()*14}px;
+    animation-duration:${5 + Math.random()*7}s;
+    animation-delay:${Math.random()*8}s;
+    opacity:0.65;
+  `;
+  container.appendChild(p);
+}
+
+// scroll reveal
+const revealMap = {
+  d1:0, d2:0, d3:0, d4:0, d5:0, d6:0,
+  featureInner:0.08, quoteSection:0.12,
+};
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+Object.keys(revealMap).forEach(id => {
+  const el = document.getElementById(id);
+  if (el) obs.observe(el);
+});
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(window._tt);
+  window._tt = setTimeout(() => t.classList.remove('show'), 3000);
+}
+</script>
+</body>
+</html>
